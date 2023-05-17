@@ -5,8 +5,6 @@ const Item = require("../Models/mainModel")
 const moment = require("moment")
 var date = moment().format("DD-MM-YYYY_hh:mm:ss-a");
 
-
-
 //Show the rendered home Page
 async function handleShowTasks(req, res) {
 
