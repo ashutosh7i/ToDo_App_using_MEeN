@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>All Uses</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+<style>
+  * {
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
+    margin: 0;
+    padding: 20px;
+  }
+  
+  h1 {
+    margin-top: 0;
+  }
+  
+  form {
+    display: flex;
+    margin-bottom: 3px;
+  }
+  
+  input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #4CAF50;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  th, td {
+    padding: 8px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  td:hover {
+    background-color: #ddd;
+    cursor: pointer;
+  }
+  
+  .status-pending {
+    color: #ff9800;
+  }
+  
+  .status-completed {
+    color: #4CAF50;
+  }
+  
+  .btn-delete, .btn-update {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .btn-delete {
+    background-color: #f44336;
+    color: #fff;
+  }
+  
+  .btn-update {
+    background-color: #2196F3;
+    color: #fff;
+  }
+  
+  .wide-column {
+    width: 60%;
+    word-wrap: break-word;
+  }
+  
+  .narrow-column0 {
+    width: 15%;
+  }
+  .narrow-column1 {
+    width: 5%;
+  }
+</style>
+</head>
+<body>
+<h1>Todo List</h1>
+<form action="/add" method="POST">
+  <input type="text" name="newTask" placeholder="Add New Item">
+  <button type="submit">Add</button>
+</form>
+<h1>Pending</h1>
+<table>
+  <thead>
+    <tr>
+      <th class="wide-column">Task</th>
+      <th class="narrow-column0">Added on</th>
+      <th class="narrow-column1">Status</th>
+      <th class="narrow-column1">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% tasks.forEach(function(task) { %>
+      <% if (task.status === false) { %>
+      <tr>
+        <td class="wide-column"><%= task.task %></td>
+        <td class="narrow-column"><%= task.dateAdded %></td>
+        <td class="narrow-column status-pending">⏳</td>
+        <td class="narrow-column">
+          <form action="/delete" method="POST">
+            <input type="hidden" name="taskId" value="<%= task._id %>">
+            <button class="btn-delete" type="submit">Delete</button>
+          </form>
+          <form action="/update" method="POST">
+            <input type="hidden" name="taskId" value="<%= task._id %>">
+            <button class="btn-update" type="submit">Complete</button>
+          </form>
+        </td>
+      </tr>
+      <% } %>
+    <% }) %>
+  </tbody>
+</table>
+<h1>Completed</h1>
+<table>
+  <thead>
+    <tr>
+      <th class="wide-column">Task</th>
+      <th class="narrow-column0">Added on</th>
+      <th class="narrow-column1">Status</th>
+      <th class="narrow-column1">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% tasks.forEach(function(task) { %>
+      <% if (task.status === true) { %>
+      <tr>
+        <td class="wide-column"><%= task.task %></td>
+        <td class="narrow-column"><%= task.dateAdded %></td>
+        <td class="narrow-column status-completed">✅</td>
+        <td class="narrow-column">
+          <form action="/delete" method="POST">
+            <input type="hidden" name="taskId" value="<%= task._id %>">
+            <button class="btn-delete" type="submit">Delete</button>
+          </form>
+          <form action="/update" method="POST">
+            <input type="hidden" name="taskId" value="<%= task._id %>">
+            <button class="btn-update" type="submit">Update</button>
+          </form>
+        </td>
+      </tr>
+      <% } %>
+    <% }) %>
+  </tbody>
+</table>
+</body>
+</html>
